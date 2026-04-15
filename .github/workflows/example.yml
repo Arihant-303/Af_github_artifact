@@ -10,6 +10,12 @@ jobs:
       - name: Run cowsay
         run: cowsay -f dragon "Hello from the dragon..!!" >> dragon.txt
 
+      - name: Upload the Dragon file
+        uses: actions/upload-artifact@v4
+        with:
+          name: dragon-file
+          path: dragon.txt        
+
       - name: Sleep for 10 seconds
         run: sleep 10
 
@@ -17,6 +23,11 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Download the Dragon file
+        uses: actions/download-artifact@v4
+        with:
+          name: dragon-file
+
       - name: Test if file exists
         run: grep -i "dragon" dragon.txt
 
@@ -24,8 +35,13 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
+      - name: Download the Dragon file
+        uses: actions/download-artifact@v4
+        with:
+          name: dragon-file
+
       - name: Deploy to production
         run: echo "Deploying to production..."
-        
+
       - name: Read the file
         run: cat dragon.txt
