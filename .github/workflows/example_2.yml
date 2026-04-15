@@ -1,0 +1,14 @@
+name: My second workflow
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Welcome message
+        run: |
+            echo "Welcome to my second workflow!"
+            echo "This workflow runs on every push to the repository."
+            echo "Feel free to customize it with your own steps and actions."
